@@ -20,13 +20,13 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	if val == 0 {
 		return &ListNode{val, nil}
 	}
-	var result *ListNode
+	result := new(ListNode)
 	for val > 0 {
-		result = add(result, val%10)
+		push(result, val%10)
 		val /= 10
 	}
 
-	return result
+	return result.Next
 }
 
 func decimal(l *ListNode) int {
@@ -40,12 +40,7 @@ func decimal(l *ListNode) int {
 	return decimal
 }
 
-func add(l *ListNode, v int) *ListNode {
-	if l == nil {
-		l = &ListNode{v, nil}
-		return l
-	}
-
+func push(l *ListNode, v int) {
 	node := l
 
 	for node.Next != nil {
@@ -53,6 +48,4 @@ func add(l *ListNode, v int) *ListNode {
 	}
 
 	node.Next = &ListNode{v, nil}
-
-	return l
 }
