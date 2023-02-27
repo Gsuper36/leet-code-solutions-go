@@ -17,7 +17,7 @@ func reverse(x int) int {
 	negative := x < 0
 
 	if negative {
-		x = x * -1
+		x *= -1
 	}
 
 	for x > 0 {
@@ -30,7 +30,7 @@ func reverse(x int) int {
 	}
 
 	if negative {
-		reversed = reversed * -1
+		reversed *= -1
 	}
 
 	return reversed
