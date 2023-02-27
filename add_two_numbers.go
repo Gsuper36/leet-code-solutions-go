@@ -16,49 +16,43 @@ func main() {
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	val := toDecimal(l1) + toDecimal(l2)
+	val := decimal(l1) + decimal(l2)
 	if val == 0 {
 		return &ListNode{val, nil}
 	}
-	nodes := &ListNode{val % 10, nil}
-	val /= 10
+	var result *ListNode
 	for val > 0 {
-		nval := val % 10
-		lnode := lastNode(nodes)
-		lnode.Next = &ListNode{nval, nil}
+		result = add(result, val%10)
 		val /= 10
 	}
 
-	return nodes
+	return result
 }
 
-func lastNode(l *ListNode) *ListNode {
-	var last *ListNode
-	for l.Next != nil {
-		last = l.Next
-		l = l.Next
+func decimal(l *ListNode) int {
+	decimal := 0
+	node := l
+	for i := 0; node != nil; i++ {
+		decimal += node.Val * int(math.Pow(10, float64(i)))
+		node = node.Next
 	}
 
-	if last == nil {
+	return decimal
+}
+
+func add(l *ListNode, v int) *ListNode {
+	if l == nil {
+		l = &ListNode{v, nil}
 		return l
 	}
 
-	return last
-}
+	node := l
 
-func toDecimal(l *ListNode) int {
-	decimal := 0
-	var digits []int
-	digits = append(digits, l.Val)
-	for l.Next != nil {
-		l = l.Next
-		digits = append(digits, l.Val)
+	for node.Next != nil {
+		node = node.Next
 	}
-	for len(digits) > 0 {
-		len := len(digits)
-		digit := digits[len-1]
-		digits = digits[:len-1]
-		decimal += digit * int(math.Pow(10, float64(len-1)))
-	}
-	return decimal
+
+	node.Next = &ListNode{v, nil}
+
+	return l
 }
